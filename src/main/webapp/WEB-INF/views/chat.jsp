@@ -17,11 +17,11 @@
 			padding: 25px
 		}
 		.container h1{
-			text-align: left;
+			text-align: center;
 			padding: 5px 5px 5px 15px;
-			color: #FFBB00;
-			border-left: 3px solid #FFBB00;
-			margin-bottom: 20px;
+			color: #3862b0;
+			border: 3px solid #3862b0;
+			margin-bottom: 5px;
 		}
 		.chating{
 			background-color: #000;
@@ -34,12 +34,32 @@
 			text-align: left;
 		}
 		input{
-			width: 330px;
+			width: 90%;
 			height: 25px;
 		}
 		#yourMsg{
 			display: none;
 		}
+		#inputtable{
+			width:500px;
+			padding: 5px 5px 5px 5px;
+			color: #000000;
+			border: 3px solid #000000;
+			margin-bottom: 5px;
+		}
+		#startBtn{
+			background : #ffffff;
+			width : 50px;
+			border: 1px solid;
+			border-radius: 15%
+		}
+		#sendBtn{
+			background : #ffffff;
+			width : 50px;
+			border: 1px solid;
+			border-radius: 15%
+		}
+		
 	</style>
 </head>
 
@@ -75,6 +95,7 @@
 		if(userName == null || userName.trim() == ""){
 			alert("사용자 이름을 입력해주세요.");
 			$("#userName").focus();
+			welcome();
 		}else{
 			wsOpen();
 			$("#yourName").hide();
@@ -82,6 +103,13 @@
 		}
 	}
 
+	function welcome() {
+		var uN = $("#userName").val();
+		var msg = "님이 입장하셨습니다.";
+		ws.send(uN+" : "+msg);
+		$('#chatting').val("");
+	}
+	
 	function send() {
 		var uN = $("#userName").val();
 		var msg = $("#chatting").val();
@@ -91,25 +119,25 @@
 </script>
 <body>
 	<div id="container" class="container">
-		<h1>채팅</h1>
+		<h1 align="center">채팅</h1>
 		<div id="chating" class="chating">
 		</div>
 		
 		<div id="yourName">
-			<table class="inputTable">
+			<table id="inputtable" class="inputTable">
 				<tr>
-					<th>사용자명</th>
+					<th>닉네임</th>
 					<th><input type="text" name="userName" id="userName"></th>
-					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
+					<th><button onclick="chatName()" id="startBtn">등록</button></th>
 				</tr>
 			</table>
 		</div>
 		<div id="yourMsg">
-			<table class="inputTable">
+			<table id="inputtable" class="inputTable">
 				<tr>
 					<th>메시지</th>
 					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
-					<th><button onclick="send()" id="sendBtn">보내기</button></th>
+					<th><button onclick="send()" id="sendBtn">전송</button></th>
 				</tr>
 			</table>
 		</div>
