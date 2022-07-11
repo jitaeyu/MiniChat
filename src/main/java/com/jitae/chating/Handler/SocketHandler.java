@@ -20,6 +20,9 @@ public class SocketHandler extends TextWebSocketHandler{
 			WebSocketSession ws = sessionMap.get(key);
 			try {
 				ws.sendMessage(new TextMessage(msg));
+				System.out.println("msg"+msg);
+				System.out.println("key"+sessionMap.get(key));
+				System.out.println("ID"+" : ");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -29,6 +32,7 @@ public class SocketHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		super.afterConnectionEstablished(session);
+		System.out.println("enable session id"+session.getId());
 		sessionMap.put(session.getId(), session);
 		
 	}
@@ -36,6 +40,7 @@ public class SocketHandler extends TextWebSocketHandler{
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessionMap.remove(session.getId());
 		super.afterConnectionClosed(session, status);
+		System.out.println("close"+status);
 		
 	}
 }

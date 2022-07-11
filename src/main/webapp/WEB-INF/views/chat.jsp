@@ -73,7 +73,13 @@
 
 	<script type="text/javascript">
 		var ws;
-
+		
+		window.onbeforeunload = function() {
+		 //window 화면을 벗어날때 이벤트 실행 (새로고침,페이지 종료 등)
+		   disconnect(); 
+		 //채팅자 퇴장 메시지 전송 and close
+		};
+		
 		function wsOpen() {
 			ws = new WebSocket("ws://" + location.host + "/chating");
 			wsEvt();
@@ -84,6 +90,7 @@
 				//소켓이 열리면 초기화 세팅하기
 				welcome();
 				//입장 시 환영메시지 최초1회
+				
 			}
 
 			ws.onmessage = function (data) {
@@ -97,7 +104,10 @@
 				if (e.keyCode == 13) { //enter press
 					send();
 				}
+
 			});
+			
+			
 		}
 
 		function chatName() {
@@ -119,6 +129,14 @@
 			var msg = "님이 입장하셨습니다";
 			ws.send(uN + "" + msg);
 		}
+		
+		  function disconnect(){
+			  var uN = $("#userName").val();
+				var msg = "님이 퇴장하셨습니다";
+				ws.send(uN + "" + msg);
+	            ws.close();
+	        }
+		
 
 		function send() {
 			var uN = $("#userName").val();
@@ -126,6 +144,8 @@
 			ws.send(uN + " : " + msg);
 			$('#chatting').val("");
 		}
+		
+		
 	</script>
 
 	<body>
